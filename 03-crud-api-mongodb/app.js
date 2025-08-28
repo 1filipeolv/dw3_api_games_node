@@ -6,11 +6,11 @@ import Game from "./models/Games.js";
 import gameRoutes from "./routes/gameRoutes.js";
 
 // Configurações do Express
-app.use(express.urlencoded({ extend: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/", gameRoutes);
+app.use('/', gameRoutes)
 
-// Iniciando a conexão com o banco de dados do MongoDB
+//Iniciando a conexão com o banco de dados no MongoDB
 mongoose.connect("mongodb://127.0.0.1:27017/api-thegames");
 
 // Rodando a API na porta 4000
@@ -19,5 +19,6 @@ app.listen(port, (error) => {
   if (error) {
     console.log(error);
   }
-  console.log(`API rodando em http://localhost:${port}`);
+  console.log(`API rodando em http://localhost:${port}
+`);
 });
