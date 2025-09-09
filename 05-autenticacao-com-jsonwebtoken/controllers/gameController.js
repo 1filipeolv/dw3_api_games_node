@@ -1,15 +1,15 @@
 import gameService from "../services/gameService.js";
 import { ObjectId } from "mongodb";
 
-//Função para LISTAR jogos
+// Função para LISTAR jogos
 const getAllgames = async (req, res) => {
   try {
     const games = await gameService.getAll();
-    //Cod. 200 (OK) - Requisição feita com sucesso
+    // Cód. 200 (OK) - Requisição feita com sucesso
     res.status(200).json({ games: games });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal error in server" });
+    res.status(500).json({ error: "Erro interno do servidor." });
   }
 };
 
@@ -18,31 +18,30 @@ const createGame = async (req, res) => {
   try {
     const { title, year, price, descriptions } = req.body;
     await gameService.Create(title, year, price, descriptions);
-    res.sendStatus(201); // Cód. 201 (Created) : Recurso criado
+    res.sendStatus(201); // Código 201 (CREATED) : Recurso criado
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal error in server" });
+    res.status(500).json({ error: "Erro interno do servidor." });
   }
 };
 
-//Função para DELETAR jogos
+// Função para DELETAR jogos
 const deleteGame = async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id)) {
       const id = req.params.id;
       await gameService.Delete(id);
-      res.sendStatus(204); // Código 204(NO CONTENT) - Requisição bem sucedida, mas não há conteúdo para retornar
+      res.sendStatus(204); // Código 204 (NO CONTENT) - Requisição bem sucedida, mas não há conteúdo para retornar.
     } else {
-      // Se o id não for válido
-      res.status(400).json({ error: "The ID sended is invalid." });
-      // Código 400(BAD REQUEST) - Requisição mal formada
+      // Se o ID não for válido
+      res.status(400).json({ error: "A ID enviada é inválida" });
+      // Código 400 (BAD REQUEST) - Requisição mal formada
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal error in server" });
+    res.status(500).json({ error: "Erro interno do servidor." });
 
     // res.status(500).json({}) -> Para enviar json junto
-
     // res.sendStatus(500) -> Somente código de status
   }
 };
@@ -66,24 +65,25 @@ const updateGame = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Erro interno do servidor" });
+    res.status(500).json({ error: "Erro interno do servidor." });
   }
 };
 
-// Função para LISTAR UM ÚNICO jogo
+// Função para BUSCAR UM ÚNICO jogo
 const getOneGame = async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id)) {
       const id = req.params.id;
       const game = await gameService.getOne(id);
       if (!game) {
-        res.status(404).json({ error: "O jogo não foi encontrado." }); // Not Found: Não encontrado
+        res.status(404).json({ error: "O jogo não foi encontrado." });
+        // Not found: Não encontrado
       } else {
         res.status(200).json({ game });
       }
     } else {
       res.status(400).json({ error: "A ID enviada é inválida" });
-      // Bad resquest: Requisição inválida
+      // Bad Request: Requisição inválida
     }
   } catch (error) {
     console.log(error);

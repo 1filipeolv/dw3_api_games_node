@@ -1,5 +1,5 @@
 // Importando o model
-import User from "../models/Users";
+import User from "../models/Users.js";
 
 class userService {
   // Método para CADASTRAR usuário
